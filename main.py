@@ -30,10 +30,19 @@ def edit_note():
     note_id = int(input("Введите ID заметки для редактирования: "))
     for note in notes:
         if note['id'] == note_id:
-            title = input("Введите новый заголовок заметки: ")
-            message = input("Введите новый текст заметки: ")
-            note['title'] = title
-            note['message'] = message
+            print("Выберите, что вы хотите изменить:")
+            print("1. Название заметки")
+            print("2. Содержимое заметки")
+            choice = input("Введите номер выбранной команды: ")
+            if choice == "1":
+                title = input("Введите новое название заметки: ")
+                note['title'] = title
+            elif choice == "2":
+                message = input("Введите новое содержимое заметки: ")
+                note['message'] = message
+            else:
+                print("Некорректная команда.")
+                return
             note['timestamp'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             save_notes()
             print("Заметка успешно отредактирована.")
@@ -83,7 +92,7 @@ def main():
     global notes
     notes = load_notes()
     while True:
-        command = input("Введите команду (add, read, edit, delete, filter, list, exit): ")
+        command = input("Введите команду (add, read, edit, delete, filter, exit): ")
         if command == "add":
             create_note()
         elif command == "read":
@@ -94,8 +103,6 @@ def main():
             delete_note()
         elif command == "filter":
             filter_notes()
-        elif command == "list":
-            read_notes()
         elif command == "exit":
             break
         else:
